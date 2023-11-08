@@ -14,7 +14,6 @@ mongoose.connect("mongodb://127.0.0.1:27017/sportszone", {
   useUnifiedTopology: true,
 });
 
-
 const UsuarioSchema = new mongoose.Schema({
   email: { type: String, required: true },
   senha: { type: String, required: true }
@@ -25,17 +24,25 @@ const Usuario = mongoose.model("Usuario", UsuarioSchema);
 app.post("/cadastrousuario", async (req, res) => {
   const email = req.body.email;
   const senha = req.body.senha;
-})
+ 
+   
+  const usuario = new Usuario({
+    email: email,
+    senha: senha
+  });
 
-// const usuario = new Usuario({
-//     email: email,
-//     senha: senha
-//   });
 
+  try {
+    const newUsuario = await usuario.save();
+    res.json({ error: null, msg: "Cadastro ok", UsuarioId: newUsuario._id });
+  } catch (error) {}
+
+
+});
 
   const produtoesporteSchema = new mongoose.Schema({ 
     id_produtoesporte: { type: String, required: true },
-    Descrição: { type: String},
+    Descricao: { type: String},
     Marca: { type: String},
     Data_fabricação: { type: Date},
     Quantidade_estoque: { type: Number}
@@ -44,38 +51,33 @@ app.post("/cadastrousuario", async (req, res) => {
   const Produtoesporte = mongoose.model("produtoesporte", produtoesporteSchema);
   
   app.post("/cadastroprodutoesporte", async (req, res) => {
-    const email = req.body.email;
-    const senha = req.body.senha;
-  });
+    const id_produtoesporte = req.body.id_produtoesporte;
+    const Descricao = req.body.Descricao;
+    const Marca = req.body.Marca;
+    const Data_fabricação = req.body.Data_fabricação;
+    const Quantidade_estoque = req.body.Quantidade_estoque
+
   
   const produtoesporte = new Produtoesporte({
-      email: email,
-      senha: senha
+      id_produtoesporte:id_produtoesporte,
+      Descricao:Descricao,
+      Marca:Marca,
+      Data_fabricação:Data_fabricação,
+      Quantidade_estoque:Quantidade_estoque
     });
   
   try {
-    const newUsuario = usuario.save();
-    res.json({ error: null, msg: "Cadastro ok", UsuarioId: newUsuario._id });
+    const newProduto = produtoesporte.save();
+    res.json({ error: null, msg: "produtoEsporte OK", UsuarioId: newProduto._id });
   } catch (error) {}
 
-  app.get("/cadastrousuario", async (req, res) => {
-    res.sendFile(__dirname + "/cadastrousuario.html");
-  });
-  
-  
-  app.get("/", async (req, res) => {
-    res.sendFile(__dirname + "/index.html");
-  });
 
-  app.get("/produtoesporte", async (req, res) => {
-    res.sendFile(__dirname + "/cadastrousuario.html");
-  });
-  
-  
-  app.get("/", async (req, res) => {
-    res.sendFile(__dirname + "/index.html");
-  });
-  
+});
+
+app.get("/", async (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
