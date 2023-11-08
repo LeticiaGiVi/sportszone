@@ -8,9 +8,32 @@
 }
 
 nav{
-    background-color: ;
+    background-color: #6e6b6b;
+}
+footer{
+    background-color: #6e6b6b;
 }
 
-.myCarousel{
-    height: 1000px;
+
+.carousel-item{
+    height: 500px;
+}
+
+#carousel1{
+    background-image: url(pexels-bruno-bueno-2204179.jpg);
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+#carousel2{
+    background-image: url(pexels-guduru-ajay-bhargav-863988.jpg);
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+
+#carousel3{
+    background-image: url(pexels-oliver-1103833.jpg);
+    background-repeat: no-repeat;
+    background-size: auto;
 }
